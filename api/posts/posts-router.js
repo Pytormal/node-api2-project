@@ -50,10 +50,10 @@ router.post("/", async (req, res) => {
   } else {
     try {
       const newPost = await Post.insert(post);
-      res.status(201).json(newPost);
+      res.status(201).json(post);
     } catch (error) {
       console.log(error);
-      res,
+      res.
         status(500).json({
           message: "There was an error while saving the post to the database",
         });
@@ -68,7 +68,7 @@ router.put("/:id", async (req, res) => {
   const post = req.body;
   try {
       const updatePost = await Post.update(id, post);
-      res.json(200)
+      res.status(200).json(post)
     if (updatePost) {
       res.json(404).json({
         message: "The post with the specified ID does not exist",
