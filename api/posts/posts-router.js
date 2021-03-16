@@ -39,4 +39,29 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// 3 [POST] /api/posts
+// Complete: it creates a new post
+// Incomplete: fails to show post info aupon created, shows post when showing all posts
+router.post('/', async (req, res) => {
+    const post = req.body;
+    if (!post.title || !post.contents) {
+        res
+          .status(400)
+          .json({ message: "Please provide title and contents for the post" });
+    } else {
+        try {
+            const newPost = await Post.insert(post)
+            res.status(201).json(newPost)
+        } catch (error) {
+            console.log(error)
+            res,
+              status(500).json({
+                message:
+                  "There was an error while saving the post to the database",
+              });
+            
+        }
+    }
+})
+
 module.exports = router;
