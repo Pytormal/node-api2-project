@@ -63,12 +63,12 @@ router.post("/", async (req, res) => {
 
 // 4 [PUT] /api/posts/:id
 // Complete: post are updated
-// incomplete: specific ID dose not exist but still updates the specific ID
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const post = req.body;
   try {
-    const updatePost = await Post.update(id, post);
+      const updatePost = await Post.update(id, post);
+      res.json(200)
     if (updatePost) {
       res.json(404).json({
         message: "The post with the specified ID does not exist",
