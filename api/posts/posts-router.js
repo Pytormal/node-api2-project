@@ -53,10 +53,9 @@ router.post("/", async (req, res) => {
       res.status(201).json(post);
     } catch (error) {
       console.log(error);
-      res.
-        status(500).json({
-          message: "There was an error while saving the post to the database",
-        });
+      res.status(500).json({
+        message: "There was an error while saving the post to the database",
+      });
     }
   }
 });
@@ -67,8 +66,8 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const post = req.body;
   try {
-      const updatePost = await Post.update(id, post);
-      res.status(200).json(post)
+    const updatePost = await Post.update(id, post);
+    res.status(200).json(post);
     if (updatePost) {
       res.status(404).json({
         message: "The post with the specified ID does not exist",
@@ -96,11 +95,32 @@ router.delete("/:id", async (req, res) => {
     if (post) {
       res.json(post);
     } else {
-      res.status(404).json({message: "The post with the specified ID does not exist" });
+      res
+        .status(404)
+        .json({ message: "The post with the specified ID does not exist" });
     }
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "The post could not be removed" });
+  }
+});
+
+// 6 [GET] /api/posts/:id/comments
+router.get("/:id/comments", async (req, res) => {
+  try {
+    const post = await Post.findPostComments(postId);
+    if (post) {
+      res.json(post);
+    } else {
+      res.status(404).json({
+        message: "The post with the specified ID does not exist",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "The comments information could not be retrieved" });
   }
 });
 
