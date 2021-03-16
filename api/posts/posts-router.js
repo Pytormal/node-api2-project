@@ -70,7 +70,7 @@ router.put("/:id", async (req, res) => {
       const updatePost = await Post.update(id, post);
       res.status(200).json(post)
     if (updatePost) {
-      res.json(404).json({
+      res.status(404).json({
         message: "The post with the specified ID does not exist",
       });
     } else {
@@ -83,6 +83,24 @@ router.put("/:id", async (req, res) => {
     res
       .status(500)
       .json({ message: "The post information could not be modified" });
+  }
+});
+
+// 5 [DELETE] /api/posts/:id
+// Completed: deletes specifc id
+// Incomplete: fails to show deleted id
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await Post.remove(id);
+    if (post) {
+      res.json(post);
+    } else {
+      res.status(404).json({message: "The post with the specified ID does not exist" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "The post could not be removed" });
   }
 });
 
